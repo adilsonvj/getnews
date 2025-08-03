@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 from newspaper import Article
+import trafilatura
+import os
 
 app = Flask(__name__)
 
@@ -9,24 +11,37 @@ def extract_text():
     url = data.get('url')
 
     if not url:
-        return jsonify({"error": "URL not provided"}), 400
+        return jsonify({"text": "N/A", "error": "URL not provided"}), 400
 
+    # Tenta com newspaper3k
     try:
         article = Article(url)
         article.download()
         article.parse()
-        return jsonify({"text": article.text})
+        text = article.text.strip()
+        if len(text) > 100:
+            return jsonify({"text": text, "method": "newspaper3k"})
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print("Erro newspaper3k:", str(e))
 
-import os
+    # Fallback com trafilatura
+    try:
+        html = trafilatura.fetch_url(url)
+        if html:
+            text = trafilatura.extract(html)
+            if text and len(text.strip()) > 100:
+                return jsonify({"text": text.strip(), "method": "trafilatura"})
+    except Exception as e:
+        print("Erro trafilatura:", str(e))
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # usa porta do Render
-    app.run(host="0.0.0.0", port=port)
+    # Se tudo falhar, retorna N/A
+    return jsonify({"text": "N/A", "error": "Falha na extração"}), 200
 
 
 @app.route('/', methods=['GET'])
 def health():
     return "API online!", 200
 
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # usa porta dinâmica no Render
+    app.run(host="0.0.0.0", port=port)
