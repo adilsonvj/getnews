@@ -2,3 +2,4 @@ Flask==2.3.3
 newspaper3k==0.2.8
 trafilatura==1.6.1
 lxml_html_clean==0.1.1
+googlenewsdecoder==0.1.7
