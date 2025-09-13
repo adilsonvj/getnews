@@ -11,7 +11,7 @@ def extract_text():
     url = data.get('url')
 
     if not url:
-        return jsonify({"url" : url,"text": "N/A", "method": "N/A", "error": "URL not provided"}), 400
+        return jsonify({"url" : url,"text": "N/A", "method": "N/A", "error": "URL not provided"}), 200
 
     # Tenta com newspaper3k
     try:
@@ -35,7 +35,7 @@ def extract_text():
         print("Erro trafilatura:", str(e))
 
     # Se tudo falhar, retorna N/A
-    return jsonify({"url" : url, "text": "N/A", "method": "N/A", "error": "Falha na extração"}), 422
+    return jsonify({"url" : url, "text": "N/A", "method": "N/A", "error": "Falha na extração"}), 200
 
 
 @app.route('/', methods=['GET'])
@@ -46,6 +46,7 @@ def health():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # usa porta dinâmica no Render
     app.run(host="0.0.0.0", port=port)
+
 
 
 
