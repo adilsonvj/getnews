@@ -35,14 +35,20 @@ def extract_text():
         print("Erro trafilatura:", str(e))
 
     # Se tudo falhar, retorna N/A
-    return jsonify({"url" : url, "text": "N/A", "method": "N/A", "error": "Falha na extração"}), 200
+    return jsonify({"url" : url, "text": "N/A", "method": "N/A", "error": "Falha na extração"}), 422
 
 
 @app.route('/', methods=['GET'])
 def health():
-    return "API online!", 200
+    return "OK", 200
+# ou JSON:
+@app.get("/health", methods=['GET'])
+def healthz():
+    return jsonify(status="ok"), 200
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # usa porta dinâmica no Render
     app.run(host="0.0.0.0", port=port)
+
 
