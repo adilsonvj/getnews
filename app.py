@@ -15,7 +15,7 @@ def extract_text():
         return jsonify({"text": "N/A", "error": "URL not provided"}), 400
 
     if 'news.google.com' in url:
-        decoded_url = gnewsdecoder(url, interval=30)
+        decoded_url = gnewsdecoder(url, interval=1)
         if decoded_url.get("status"):
             url = decoded_url["decoded_url"]
         else:
@@ -54,3 +54,4 @@ def health():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # usa porta dinâmica no Render
     app.run(host="0.0.0.0", port=port)
+
