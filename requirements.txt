@@ -1,5 +1,8 @@
-Flask==2.3.3
-newspaper3k==0.2.8
-trafilatura==1.6.1
-lxml_html_clean==0.1.1
+Flask==3.0
+requests==2.31
 googlenewsdecoder==0.1.7
+trafilatura==1.7.0
+newspaper3k==0.2.8
+lxml==5.2.2
+gunicorn==22.0.0
+gevent==24.2.1
