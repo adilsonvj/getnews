@@ -41,14 +41,11 @@ def extract_text():
 @app.route('/', methods=['GET'])
 def health():
     return "OK", 200
-# ou JSON:
-@app.get("/health", methods=['GET'])
-def healthz():
-    return jsonify(status="ok"), 200
 
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # usa porta dinâmica no Render
     app.run(host="0.0.0.0", port=port)
+
 
 
