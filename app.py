@@ -22,7 +22,7 @@ def extract_text():
         if len(text) > 100:
             return jsonify({"url" : url, "text": text, "method": "newspaper3k", "error" : "N/A"}), 200
     except Exception as e:
-        print("Erro newspaper3k:", str(e))
+        return jsonify({"url" : url,"text": "N/A", "method": "N/A", "error": str(e)}), 200
 
     # Fallback com trafilatura
     try:
@@ -46,6 +46,7 @@ def health():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # usa porta dinâmica no Render
     app.run(host="0.0.0.0", port=port)
+
 
 
 
