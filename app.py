@@ -11,7 +11,10 @@ def extract_text():
     url = data.get('url')
 
     if not url:
-        return jsonify({"url" : url,"text": None, "method": None, "error": "URL not provided"}), 200
+        return jsonify({"url" : url
+                        , "text" : None
+                        , "method" : None
+                        , "error" : "URL not provided"}), 200
 
     # Tenta com newspaper3k
     try:
@@ -20,9 +23,15 @@ def extract_text():
         article.parse()
         text = article.text.strip()
         if len(text) > 100:
-            return jsonify({"url" : url, "text": text, "method": "newspaper3k", "error" : None}), 200
+            return jsonify({"url" : url
+                            , "text" : text
+                            , "method" : "newspaper3k"
+                            , "error" : None}), 200
     except Exception as e:
-        return jsonify({"url" : url,"text": None, "method": "newspaper3k", "error": str(e)}), 200
+        return jsonify({"url" : url
+                        , "text" : None
+                        , "method" : "newspaper3k"
+                        , "error": str(e)}), 200
 
     # Fallback com trafilatura
     try:
@@ -30,12 +39,21 @@ def extract_text():
         if html:
             text = trafilatura.extract(html)
             if text and len(text.strip()) > 100:
-                return jsonify({"url" : url, "text": text.strip(), "method": "trafilatura", "error" : None}), 200
+                return jsonify({"url" : url
+                                , "text": text.strip()
+                                , "method" : "trafilatura"
+                                , "error" : None}), 200
     except Exception as e:
-        return jsonify({"url" : url, "text": None, "method": "trafilatura", "error" : str(e)}), 200
+        return jsonify({"url" : url
+                        , "text" : None
+                        , "method" : "trafilatura"
+                        , "error" : str(e)}), 200
         
     # Se tudo falhar, retorna N/A
-    return jsonify({"url" : url, "text": None, "method": None, "error": "Falha na extração"}), 200
+    return jsonify({"url" : url
+                    , "text" : None
+                    , "method" : None
+                    , "error" : "Falha na extração"}), 200
 
 
 @app.route('/', methods=['GET'])
@@ -46,6 +64,7 @@ def health():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # usa porta dinâmica no Render
     app.run(host="0.0.0.0", port=port)
+
 
 
 
