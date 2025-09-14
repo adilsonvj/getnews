@@ -1,5 +1,20 @@
-Flask==3.0
-requests==2.31
-trafilatura==1.7.0
-newspaper3k==0.2.8
-lxml==5.2.2
+# Web server
+Flask>=3.0
+gunicorn>=22.0
+
+# Extractores de texto
+newspaper3k>=0.2.8
+trafilatura>=1.6.0
+
+# Dependências úteis/implícitas do newspaper3k (deixadas explícitas p/ evitar build quebrado)
+lxml>=5.0
+cssselect>=1.2.0
+beautifulsoup4>=4.12
+feedparser>=6.0
+Pillow>=10.0
+nltk>=3.8
+tldextract>=3.5
+python-dateutil>=2.8.2
+
+# Utilitários
+requests>=2.32
