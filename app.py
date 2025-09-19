@@ -64,12 +64,13 @@ def extract_text():
     return jsonify({"url": url, "text": None, "method": None, "error": "Falha na extração"}), 200
 
 
-@app.route("/", methods=["GET"])
+@app.route("/health", methods=["GET"])
 def health():
-    return "OK", 200
+    return jsonify({"status": "ok"}), 200
 
 
 if __name__ == "__main__":
     # Local: python app.py
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
